@@ -1,6 +1,7 @@
 package br.com.fiap.FarmaNear_Receiver.service;
 
 import br.com.fiap.FarmaNear_Receiver.controller.dto.LoginDTO;
+import br.com.fiap.FarmaNear_Receiver.infra.security.TokenService;
 import br.com.fiap.FarmaNear_Receiver.model.User;
 import br.com.fiap.FarmaNear_Receiver.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,10 @@ public class LoginService {
   @Autowired
   private UserRepository userRepository;
 
-  public void login(LoginDTO loginDTO) {
+  @Autowired
+  private TokenService tokenService;
+
+  public String login(LoginDTO loginDTO) {
     Optional<User> user = userRepository.findByLogin(loginDTO.login());
     if (user.isEmpty()) {
       throw new RuntimeException("User not found");
@@ -25,5 +29,7 @@ public class LoginService {
     if (!encoder.matches(loginDTO.password(), user.get().getPassword())) {
       throw new RuntimeException("Wrong password");
     }
+
+    return tokenService.generateToken(loginDTO.login());
   }
 }
