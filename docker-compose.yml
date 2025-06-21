@@ -1,0 +1,12 @@
+version: "3.8"
+
+services:
+  receiver-db:
+    image: postgres:latest
+    container_name: receiver-db
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=receiver-db
+    ports:
+      - "5434:5432"
