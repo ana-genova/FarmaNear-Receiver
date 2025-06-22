@@ -12,21 +12,30 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserService {
 
-  @Autowired
-  private UserRepository userRepository;
+    private final UserRepository userRepository;
 
-  @Transactional
-  public void createUser(LoginDTO loginDTO) {
-    if (StringUtils.isBlank(loginDTO.login())) {
-      throw new RuntimeException("Invalid Login");
-    }
-    if (StringUtils.isBlank(loginDTO.password())) {
-      throw new RuntimeException("Invalid Password");
+    @Autowired
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
-    BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-    String encryptedPassword = encoder.encode(loginDTO.password());
-    User newUser = new User(loginDTO.login(), encryptedPassword);
-    userRepository.save(newUser);
-  }
+    @Transactional
+    public void createUser(LoginDTO loginDTO) {
+        validateFields(loginDTO);
+
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        String encryptedPassword = encoder.encode(loginDTO.password());
+        User newUser = new User(loginDTO.login(), encryptedPassword);
+        userRepository.save(newUser);
+    }
+
+    private void validateFields(LoginDTO loginDTO) {
+        if (StringUtils.isBlank(loginDTO.login())) {
+            throw new RuntimeException("Invalid Login");
+        }
+
+        if (StringUtils.isBlank(loginDTO.password())) {
+            throw new RuntimeException("Invalid Password");
+        }
+    }
 }
