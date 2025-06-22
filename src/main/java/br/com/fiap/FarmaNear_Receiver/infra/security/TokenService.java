@@ -46,8 +46,9 @@ public class TokenService {
   }
 
   private boolean isExpired(DecodedJWT decodedJWT) {
-    return Instant.now().atOffset(ZoneOffset.of("-03:00"))
-        .isAfter(decodedJWT.getExpiresAt().toInstant().atOffset(ZoneOffset.of("-03:00")));
+    Instant tokenExpiration = decodedJWT.getExpiresAt().toInstant();
+    Instant currentTime = Instant.now().atOffset(ZoneOffset.of("-03:00")).toInstant();
+    return currentTime.isAfter(tokenExpiration);
   }
 
   private Instant expirationDate() {
