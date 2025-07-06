@@ -2,6 +2,7 @@ package br.com.fiap.FarmaNear_Receiver.service;
 
 import br.com.fiap.FarmaNear_Receiver.client.patient.PatientService;
 import br.com.fiap.FarmaNear_Receiver.client.pharmacy.PharmacyService;
+import br.com.fiap.FarmaNear_Receiver.exception.UserAuthorityException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -12,7 +13,6 @@ public class AuthorityService {
 
     private static final String ROLE_PATIENT = "ROLE_PATIENT";
     private static final String ROLE_PHARMACY = "ROLE_PHARMACY";
-    private static final String ROLE_IN_CREATION = "ROLE_IN_CREATION";
 
     private final PatientService patientService;
     private final PharmacyService pharmacyService;
@@ -32,7 +32,7 @@ public class AuthorityService {
             return new SimpleGrantedAuthority(ROLE_PHARMACY);
         }
 
-        return new SimpleGrantedAuthority(ROLE_IN_CREATION);
+        throw new UserAuthorityException("User does not have a valid authority");
     }
 
 }

@@ -11,13 +11,15 @@ public class User {
   private Long id;
   private String login;
   private String password;
+  private String role;
 
   public User() {
   }
 
-  public User(String login, String password) {
+  public User(String login, String password, RoleEnum role) {
     this.login = login;
     this.password = password;
+    this.role = role.name();
   }
 
   public Long getId() {
@@ -26,5 +28,9 @@ public class User {
 
   public String getPassword() {
     return password;
+  }
+
+  public RoleEnum getRole() {
+    return RoleEnum.valueOf(role);
   }
 }

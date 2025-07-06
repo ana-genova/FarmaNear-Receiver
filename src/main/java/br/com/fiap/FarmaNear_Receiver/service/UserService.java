@@ -25,7 +25,7 @@ public class UserService {
 
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         String encryptedPassword = encoder.encode(loginDTO.password());
-        User newUser = new User(loginDTO.login(), encryptedPassword);
+        User newUser = new User(loginDTO.login(), encryptedPassword, loginDTO.role());
         userRepository.save(newUser);
     }
 
