@@ -18,8 +18,8 @@ public class TokenService {
     @Value("${api.security.token.secret}")
     private String secret;
 
-    @Value("${api.security.token.secret.timeout:10}")
-    private long timeout;
+    @Value("${api.security.token.secret.timeout}")
+    private Long timeout;
 
     public String generateToken(String login) {
         try {
