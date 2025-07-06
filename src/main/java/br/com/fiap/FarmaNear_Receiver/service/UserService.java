@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class UserService {
 
@@ -23,10 +25,21 @@ public class UserService {
     public void createUser(LoginDTO loginDTO) {
         validateFields(loginDTO);
 
+        validateIfUserExists(loginDTO.login());
+
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         String encryptedPassword = encoder.encode(loginDTO.password());
         User newUser = new User(loginDTO.login(), encryptedPassword, loginDTO.role());
+
         userRepository.save(newUser);
+    }
+
+    private void validateIfUserExists(String login) {
+        Optional<User> user = userRepository.findByLogin(login);
+
+        if (user.isPresent()) {
+            throw new RuntimeException("User already exists");
+        }
     }
 
     private void validateFields(LoginDTO loginDTO) {
