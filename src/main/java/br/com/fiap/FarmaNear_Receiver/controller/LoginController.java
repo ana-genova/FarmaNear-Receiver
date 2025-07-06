@@ -1,6 +1,7 @@
 package br.com.fiap.FarmaNear_Receiver.controller;
 
 import br.com.fiap.FarmaNear_Receiver.controller.dto.LoginDTO;
+import br.com.fiap.FarmaNear_Receiver.controller.dto.UserDTO;
 import br.com.fiap.FarmaNear_Receiver.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +22,7 @@ public class LoginController {
     }
 
     @PostMapping
-    public ResponseEntity<String> login(@RequestBody LoginDTO loginDTO) {
+    public ResponseEntity<UserDTO> login(@RequestBody LoginDTO loginDTO) {
         return ResponseEntity.ok().body(loginService.login(loginDTO));
     }
 

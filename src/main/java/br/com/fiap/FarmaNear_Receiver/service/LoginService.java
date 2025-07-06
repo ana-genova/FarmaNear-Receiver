@@ -1,6 +1,7 @@
 package br.com.fiap.FarmaNear_Receiver.service;
 
 import br.com.fiap.FarmaNear_Receiver.controller.dto.LoginDTO;
+import br.com.fiap.FarmaNear_Receiver.controller.dto.UserDTO;
 import br.com.fiap.FarmaNear_Receiver.infra.security.TokenService;
 import br.com.fiap.FarmaNear_Receiver.model.User;
 import br.com.fiap.FarmaNear_Receiver.repository.UserRepository;
@@ -24,13 +25,15 @@ public class LoginService {
         this.userRepository = userRepository;
     }
 
-    public String login(LoginDTO loginDTO) {
-        Optional<User> user = userRepository.findByLogin(loginDTO.login());
-        validateLogin(user, loginDTO.password());
-        return tokenService.generateToken(loginDTO.login());
+    public UserDTO login(LoginDTO loginDTO) {
+        Optional<User> optionalUser = userRepository.findByLogin(loginDTO.login());
+        User user = validateLogin(optionalUser, loginDTO.password());
+        String token = tokenService.generateToken(loginDTO.login());
+
+        return new UserDTO(token, user.getRole());
     }
 
-    private void validateLogin(Optional<User> user, String inputPassword) {
+    private User validateLogin(Optional<User> user, String inputPassword) {
         if (user.isEmpty()) {
             throw new RuntimeException("User not found");
         }
@@ -38,6 +41,8 @@ public class LoginService {
         if (!encoder.matches(inputPassword, user.get().getPassword())) {
             throw new RuntimeException("Wrong password");
         }
+
+        return user.get();
     }
 
 

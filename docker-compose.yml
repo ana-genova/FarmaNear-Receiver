@@ -10,3 +10,15 @@ services:
       - POSTGRES_DB=receiver-db
     ports:
       - "5434:5432"
+
+  farmanear-receiver:
+    image: julioborges05/farmanear-receiver
+    container_name: farmanear-receiver
+    environment:
+      - DB_URL=jdbc:postgresql://receiver-db:5432/receiver-db
+      - DB_USER=user
+      - DB_PASSWORD=password
+      - JWT_SECRET=${JWT_SECRET}
+      - JWT_SECRET_TIMEOUT_MINUTES=${JWT_SECRET_TIMEOUT_MINUTES}
+    ports:
+      - "8080:8080"
