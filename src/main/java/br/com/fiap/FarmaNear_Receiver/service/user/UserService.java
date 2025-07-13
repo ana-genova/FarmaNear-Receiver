@@ -1,6 +1,7 @@
 package br.com.fiap.FarmaNear_Receiver.service.user;
 
 import br.com.fiap.FarmaNear_Receiver.controller.dto.LoginDTO;
+import br.com.fiap.FarmaNear_Receiver.controller.dto.info.UserInfoDTO;
 import br.com.fiap.FarmaNear_Receiver.model.User;
 import br.com.fiap.FarmaNear_Receiver.repository.UserRepository;
 import io.micrometer.common.util.StringUtils;
@@ -17,7 +18,7 @@ public abstract class UserService {
         this.userRepository = userRepository;
     }
 
-    public abstract void createUserOnServices();
+    public abstract void createUserOnServices(UserInfoDTO userInfoDTO);
 
     @Transactional
     public void createUser(LoginDTO loginDTO) {
@@ -26,6 +27,10 @@ public abstract class UserService {
 
         User newUser = new User(loginDTO.login(), loginDTO.name(), encryptPassword(loginDTO.password()), loginDTO.role());
         userRepository.save(newUser);
+    }
+
+    public void finishUserCreation(UserInfoDTO userInfoDTO) {
+        createUserOnServices(userInfoDTO);
     }
 
     private void validateFields(LoginDTO loginDTO) {

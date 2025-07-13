@@ -1,13 +1,13 @@
 package br.com.fiap.FarmaNear_Receiver.controller;
 
 import br.com.fiap.FarmaNear_Receiver.controller.dto.LoginDTO;
+import br.com.fiap.FarmaNear_Receiver.controller.dto.info.UserInfoDTO;
 import br.com.fiap.FarmaNear_Receiver.model.RoleEnum;
 import br.com.fiap.FarmaNear_Receiver.service.user.PatientUserService;
 import br.com.fiap.FarmaNear_Receiver.service.user.PharmacyUserService;
 import br.com.fiap.FarmaNear_Receiver.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -32,9 +32,10 @@ public class UserController {
         return ResponseEntity.ok().build();
     }
 
-    @PreAuthorize("hasRole('PATIENT')")
-    @GetMapping("/helloWorld")
-    public String helloWorld() {
-        return "Hello World!";
+    @PutMapping("/finishUserCreation/{role}")
+    public ResponseEntity<?> finishUserCreation(@RequestBody UserInfoDTO userInfoDTO, @PathVariable RoleEnum role) {
+        userServiceMap.get(role).finishUserCreation(userInfoDTO);
+        return ResponseEntity.ok().build();
     }
+
 }
