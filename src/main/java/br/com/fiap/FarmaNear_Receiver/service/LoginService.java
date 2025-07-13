@@ -30,7 +30,7 @@ public class LoginService {
         User user = validateLogin(optionalUser, loginDTO.password());
         String token = tokenService.generateToken(loginDTO.login());
 
-        return new UserDTO(token, user.getRole());
+        return new UserDTO(token, user.getName(), user.getRole());
     }
 
     private User validateLogin(Optional<User> user, String inputPassword) {
