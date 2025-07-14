@@ -1,5 +1,6 @@
 package br.com.fiap.FarmaNear_Receiver.service.user;
 
+import br.com.fiap.FarmaNear_Receiver.controller.dto.info.UserInfoDTO;
 import br.com.fiap.FarmaNear_Receiver.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
@@ -11,9 +12,8 @@ public class PatientUserService extends UserService {
     }
 
     @Override
-    public void createUserOnServices() {
-
+    public void createUserOnServices(UserInfoDTO userInfoDTO) {
+        throw new RuntimeException("Method not implemented");
     }
-
 
 }
