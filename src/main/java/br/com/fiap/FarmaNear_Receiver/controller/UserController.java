@@ -1,14 +1,11 @@
 package br.com.fiap.FarmaNear_Receiver.controller;
 
 import br.com.fiap.FarmaNear_Receiver.controller.dto.LoginDTO;
-import br.com.fiap.FarmaNear_Receiver.controller.dto.info.UserInfoDTO;
-import br.com.fiap.FarmaNear_Receiver.infra.security.TokenService;
 import br.com.fiap.FarmaNear_Receiver.model.RoleEnum;
 import br.com.fiap.FarmaNear_Receiver.service.user.PatientUserService;
 import br.com.fiap.FarmaNear_Receiver.service.user.PharmacyUserService;
 import br.com.fiap.FarmaNear_Receiver.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,31 +17,17 @@ import java.util.Map;
 public class UserController {
 
     private final Map<RoleEnum, UserService> userServiceMap;
-    private final TokenService tokenService;
 
     @Autowired
-    public UserController(PatientUserService patientUserServiceService, PharmacyUserService pharmacyUserService,
-                          TokenService tokenService) {
+    public UserController(PatientUserService patientUserServiceService, PharmacyUserService pharmacyUserService) {
         userServiceMap = new HashMap<>();
         userServiceMap.put(RoleEnum.PATIENT, patientUserServiceService);
         userServiceMap.put(RoleEnum.PHARMACY, pharmacyUserService);
-
-        this.tokenService = tokenService;
     }
 
     @PostMapping("/create")
     public ResponseEntity<?> login(@RequestBody LoginDTO loginDTO) {
         userServiceMap.get(loginDTO.role()).createUser(loginDTO);
-        return ResponseEntity.ok().build();
-    }
-
-    @PostMapping("/finishUserCreation")
-    public ResponseEntity<?> finishUserCreation(@RequestBody UserInfoDTO userInfoDTO, @Param("Authorization") String authorization) {
-        String roleString = tokenService.getRole(authorization.replace("Bearer ", ""));
-        RoleEnum role = RoleEnum.valueOf(roleString.toUpperCase());
-
-        userServiceMap.get(role).finishUserCreation(userInfoDTO);
-
         return ResponseEntity.ok().build();
     }
 
