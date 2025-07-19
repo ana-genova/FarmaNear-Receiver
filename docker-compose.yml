@@ -27,6 +27,16 @@ services:
     ports:
       - "5433:5432"
 
+  finder-db:
+    image: postgres:latest
+    container_name: finder-db
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=finder-db
+    ports:
+      - "5435:5432"
+
   zookeeper:
     image: confluentinc/cp-zookeeper:7.2.1
     hostname: zookeeper

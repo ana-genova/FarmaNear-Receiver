@@ -16,27 +16,27 @@ import java.util.List;
 public class PharmacyServiceFallback implements PharmacyService {
 
     @Override
-    public DrugstoreDTO createDrugstore(CreateDrugstoreDTO createDrugstoreDTO) {
+    public DrugstoreDTO createDrugstore(CreateDrugstoreDTO createDrugstoreDTO, String token) {
         throw new RuntimeException("Erro ao realizar a comunicação com o serviço de farmácias");
     }
 
     @Override
-    public List<PharmacyProductDTO> uploadCsv(MultipartFile file, String drugstoreCnpj) throws Exception {
+    public List<PharmacyProductDTO> uploadCsv(MultipartFile file, String drugstoreCnpj, String token) throws Exception {
         throw new RuntimeException("Erro ao realizar a comunicação com o serviço de farmácias");
     }
 
     @Override
-    public ResponseEntity<PharmacyProductDTO> importNewProduct(PharmacyProductDTO productDto) {
+    public ResponseEntity<PharmacyProductDTO> importNewProduct(PharmacyProductDTO productDto, String token) {
         throw new RuntimeException("Erro ao realizar a comunicação com o serviço de farmácias");
     }
 
     @Override
-    public ResponseEntity<GetDrugstoreByProductDTO> getDrugstoreByProduct(String productName) {
+    public ResponseEntity<GetDrugstoreByProductDTO> getDrugstoreByProduct(String productName, String token) {
         throw new RuntimeException("Erro ao realizar a comunicação com o serviço de farmácias");
     }
 
     @Override
-    public ResponseEntity<List<GetProductDataDTO>> getProducts(String productName) {
+    public ResponseEntity<List<GetProductDataDTO>> getProducts(String productName, String token) {
         throw new RuntimeException("Erro ao realizar a comunicação com o serviço de farmácias");
     }
 

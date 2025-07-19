@@ -7,6 +7,7 @@ import br.com.fiap.FarmaNear_Receiver.client.pharmacy.response.GetDrugstoreByPro
 import br.com.fiap.FarmaNear_Receiver.client.pharmacy.response.GetProductDataDTO;
 import br.com.fiap.FarmaNear_Receiver.client.pharmacy.response.PharmacyProductDTO;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,19 +20,19 @@ import java.util.List;
         fallback = PharmacyServiceFallback.class)
 public interface PharmacyService {
 
-    @PostMapping("/register/drugstore")
-    DrugstoreDTO createDrugstore(CreateDrugstoreDTO createDrugstoreDTO);
+    @PostMapping("/drugstore/register")
+    DrugstoreDTO createDrugstore(@RequestBody CreateDrugstoreDTO createDrugstoreDTO, @RequestHeader(HttpHeaders.AUTHORIZATION) String token);
 
     @PostMapping(value = "/product/upload-csv/{drugstoreCnpj}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    List<PharmacyProductDTO> uploadCsv(@RequestParam("file") MultipartFile file, @PathVariable String drugstoreCnpj) throws Exception;
+    List<PharmacyProductDTO> uploadCsv(@RequestParam("file") MultipartFile file, @PathVariable String drugstoreCnpj, @RequestHeader(HttpHeaders.AUTHORIZATION) String token) throws Exception;
 
     @PostMapping("/product")
-    ResponseEntity<PharmacyProductDTO> importNewProduct(@RequestBody PharmacyProductDTO productDto);
+    ResponseEntity<PharmacyProductDTO> importNewProduct(@RequestBody PharmacyProductDTO productDto, @RequestHeader(HttpHeaders.AUTHORIZATION) String token);
 
     @GetMapping("/product")
-    ResponseEntity<GetDrugstoreByProductDTO> getDrugstoreByProduct(@RequestParam String productName);
+    ResponseEntity<GetDrugstoreByProductDTO> getDrugstoreByProduct(@RequestParam String productName, @RequestHeader(HttpHeaders.AUTHORIZATION) String token);
 
     @GetMapping("/product/getProducts")
-    ResponseEntity<List<GetProductDataDTO>> getProducts(@RequestBody String productName);
+    ResponseEntity<List<GetProductDataDTO>> getProducts(@RequestBody String productName, @RequestHeader(HttpHeaders.AUTHORIZATION) String token);
 
 }

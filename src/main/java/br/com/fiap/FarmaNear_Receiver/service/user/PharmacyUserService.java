@@ -4,6 +4,7 @@ import br.com.fiap.FarmaNear_Receiver.client.pharmacy.PharmacyService;
 import br.com.fiap.FarmaNear_Receiver.client.pharmacy.request.CreateDrugstoreDTO;
 import br.com.fiap.FarmaNear_Receiver.controller.dto.info.PharmacyUserInfoDTO;
 import br.com.fiap.FarmaNear_Receiver.controller.dto.info.UserInfoDTO;
+import br.com.fiap.FarmaNear_Receiver.infra.security.TokenHolder;
 import br.com.fiap.FarmaNear_Receiver.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
@@ -30,7 +31,7 @@ public class PharmacyUserService extends UserService {
                 pharmacyUserInfoDTO.getAddress()
             );
 
-            pharmacyService.createDrugstore(createDrugstoreDTO);
+            pharmacyService.createDrugstore(createDrugstoreDTO, TokenHolder.getToken());
             return;
         }
 
