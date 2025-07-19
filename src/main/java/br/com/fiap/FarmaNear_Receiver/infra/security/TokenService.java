@@ -50,6 +50,20 @@ public class TokenService {
         }
     }
 
+    public String getRole(String token) {
+        try {
+            var algorithm = Algorithm.HMAC256(secret);
+            DecodedJWT decodedJWT = JWT.require(algorithm).withIssuer("FarmaNear").build().verify(token);
+
+            if (isExpired(decodedJWT)) {
+                throw new RuntimeException("Token expired");
+            }
+            return decodedJWT.getClaim("role").asString();
+        } catch (JWTVerificationException e) {
+            throw new RuntimeException("Error", e);
+        }
+    }
+
     private boolean isExpired(DecodedJWT decodedJWT) {
         Instant tokenExpiration = decodedJWT.getExpiresAt().toInstant();
         Instant currentTime = Instant.now().atOffset(ZoneOffset.of("-03:00")).toInstant();
