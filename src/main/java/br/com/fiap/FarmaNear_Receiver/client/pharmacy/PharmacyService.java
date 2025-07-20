@@ -23,8 +23,8 @@ public interface PharmacyService {
     @PostMapping("/drugstore/register")
     DrugstoreDTO createDrugstore(@RequestBody CreateDrugstoreDTO createDrugstoreDTO, @RequestHeader(HttpHeaders.AUTHORIZATION) String token);
 
-    @PostMapping(value = "/product/upload-csv/{drugstoreCnpj}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    List<PharmacyProductDTO> uploadCsv(@RequestParam("file") MultipartFile file, @PathVariable String drugstoreCnpj, @RequestHeader(HttpHeaders.AUTHORIZATION) String token) throws Exception;
+    @PostMapping(value = "/product/upload-csv/{drugstoreCnpj}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.MULTIPART_FORM_DATA_VALUE)
+    List<PharmacyProductDTO> uploadCsv(@RequestPart("file") MultipartFile file, @PathVariable String drugstoreCnpj, @RequestHeader(HttpHeaders.AUTHORIZATION) String token) throws Exception;
 
     @PostMapping("/product")
     ResponseEntity<PharmacyProductDTO> importNewProduct(@RequestBody PharmacyProductDTO productDto, @RequestHeader(HttpHeaders.AUTHORIZATION) String token);
