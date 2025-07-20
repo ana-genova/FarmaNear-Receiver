@@ -6,11 +6,13 @@ import br.com.fiap.FarmaNear_Receiver.client.finder.request.FinderCoordinatesRec
 import br.com.fiap.FarmaNear_Receiver.client.finder.response.FinderResponse;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
 @RestController
+@RequestMapping("/finder")
 public class FinderController {
 
     private final FinderService finderService;
