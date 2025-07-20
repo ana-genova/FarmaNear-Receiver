@@ -12,17 +12,6 @@ public class WebConfig implements WebMvcConfigurer {
     @Value("${front.url}")
     private String frontUrl;
 
-    private final TokenInterceptor tokenInterceptor;
-
-    public WebConfig(TokenInterceptor tokenInterceptor) {
-        this.tokenInterceptor = tokenInterceptor;
-    }
-
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(tokenInterceptor).addPathPatterns("/**");
-    }
-
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
