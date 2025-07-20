@@ -2,6 +2,8 @@ package br.com.fiap.FarmaNear_Receiver.controller;
 
 import br.com.fiap.FarmaNear_Receiver.client.pharmacy.PharmacyService;
 import br.com.fiap.FarmaNear_Receiver.client.pharmacy.request.CreateDrugstoreDTO;
+import br.com.fiap.FarmaNear_Receiver.client.pharmacy.request.CreateDrugstoreRequest;
+import br.com.fiap.FarmaNear_Receiver.client.pharmacy.request.PharmacyAddressDTO;
 import br.com.fiap.FarmaNear_Receiver.client.pharmacy.response.DrugstoreDTO;
 import br.com.fiap.FarmaNear_Receiver.client.pharmacy.response.GetDrugstoreByProductDTO;
 import br.com.fiap.FarmaNear_Receiver.client.pharmacy.response.GetProductDataDTO;
@@ -26,9 +28,14 @@ public class PharmacyController {
     }
 
     @PreAuthorize("hasRole('PHARMACY')")
-    @PostMapping("/finishUserCreation")
-    public ResponseEntity<?> finishUserCreation(@RequestBody CreateDrugstoreDTO userInfoDTO) {
-        pharmacyService.createDrugstore(userInfoDTO, TokenHolder.getToken());
+    @PostMapping("/finishCreation")
+    public ResponseEntity<?> finishUserCreation(@RequestBody CreateDrugstoreRequest userInfoDTO) {
+        PharmacyAddressDTO address = new PharmacyAddressDTO(userInfoDTO.street(), userInfoDTO.number(), "",
+                userInfoDTO.city(), userInfoDTO.state(), userInfoDTO.zipCode());
+        CreateDrugstoreDTO dto = new CreateDrugstoreDTO(userInfoDTO.cnpj(), userInfoDTO.name(), userInfoDTO.email(),
+                userInfoDTO.phone(), address);
+
+        pharmacyService.createDrugstore(dto, TokenHolder.getToken());
 
         return ResponseEntity.ok().build();
     }
