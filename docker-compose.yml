@@ -37,6 +37,42 @@ services:
     ports:
       - "5435:5432"
 
+  receiver:
+    image: julioborges05/farmanear-receiver
+    container_name: farmanear-receiver
+    environment:
+      - DB_URL=${DB_URL_RECEIVER}
+      - DB_USER=${DB_USER_RECEIVER}
+      - DB_PASSWORD=${DB_PASSWORD_RECEIVER}
+      - JWT_SECRET=${JWT_SECRET}
+      - JWT_SECRET_TIMEOUT_MINUTES=${JWT_SECRET_TIMEOUT_MINUTES}
+      - FRONT_URL={FRONT_URL}
+      - PHARMACY_SERVICE_URL=${PHARMACY_SERVICE_URL}
+      - PATIENT_SERVICE_URL=${PATIENT_SERVICE_URL}
+      - FINDER_SERVICE_URL=${FINDER_SERVICE_URL}
+    ports:
+      - "8080:8080"
+
+  pharmacy:
+    image: julioborges05/farmanear-register
+    container_name: farmanear-register
+    environment:
+      - DB_URL=${DB_URL_PHARMACY}
+      - JWT_SECRET=${JWT_SECRET}
+      - FRONT_URL={FRONT_URL}
+      - SPRING_KAFKA_BOOTSTRAP_SERVERS=${SPRING_KAFKA_BOOTSTRAP_SERVERS}
+
+  finder:
+    image: julioborges05/farmanear-finder
+    container_name: farmanear-finder
+    environment:
+      - DB_URL=${DB_URL_FINDER}
+      - DB_USER=${DB_USER_FINDER}
+      - DB_PASSWORD=${DB_PASSWORD_FINDER}
+      - PHARMACY_SERVICE_URL=${PHARMACY_SERVICE_URL}
+      - PATIENT_SERVICE_URL=${PATIENT_SERVICE_URL}
+      - SPRING_KAFKA_BOOTSTRAP_SERVERS=${SPRING_KAFKA_BOOTSTRAP_SERVERS}
+
   zookeeper:
     image: confluentinc/cp-zookeeper:7.2.1
     hostname: zookeeper
