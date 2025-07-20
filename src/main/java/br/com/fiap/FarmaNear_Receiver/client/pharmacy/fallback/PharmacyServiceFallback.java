@@ -40,4 +40,14 @@ public class PharmacyServiceFallback implements PharmacyService {
         throw new RuntimeException("Erro ao realizar a comunicação com o serviço de farmácias");
     }
 
+    @Override
+    public ResponseEntity<List<GetProductDataDTO>> getProductsByCnpj(String cnpj, String token) {
+        throw new RuntimeException("Erro ao realizar a comunicação com o serviço de farmácias");
+    }
+
+    @Override
+    public ResponseEntity<List<GetProductDataDTO>> getDrugstore(String cnpj, String token) {
+        throw new RuntimeException("Erro ao realizar a comunicação com o serviço de farmácias");
+    }
+
 }

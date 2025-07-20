@@ -68,6 +68,11 @@ public class PatientServiceFallback implements PatientService {
     }
 
     @Override
+    public ResponseEntity<PatientAddressDTO> readPatientByCpf(String patientCpf) {
+        throw new RuntimeException("Erro ao realizar a comunicação com o serviço de pacientes");
+    }
+
+    @Override
     public ResponseEntity<PatientAddressDTO> readAddressPatient(Long patientId) {
         throw new RuntimeException("Erro ao realizar a comunicação com o serviço de pacientes");
     }
