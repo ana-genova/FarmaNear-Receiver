@@ -35,4 +35,10 @@ public interface PharmacyService {
     @GetMapping("/product/getProducts")
     ResponseEntity<List<GetProductDataDTO>> getProducts(@RequestBody String productName, @RequestHeader(HttpHeaders.AUTHORIZATION) String token);
 
+    @GetMapping("/product/getProductsByCnpj")
+    ResponseEntity<List<GetProductDataDTO>> getProductsByCnpj(@RequestParam String cnpj, @RequestHeader(HttpHeaders.AUTHORIZATION) String token);
+
+    @GetMapping("/drugstore")
+    ResponseEntity<List<GetProductDataDTO>> getDrugstore(@RequestParam String cnpj, @RequestHeader(HttpHeaders.AUTHORIZATION) String token);
+
 }

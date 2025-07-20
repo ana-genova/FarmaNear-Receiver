@@ -50,6 +50,9 @@ public interface PatientService {
     @GetMapping(value = "/address/read/{addressId}")
     ResponseEntity<PatientAddressDTO> readAddress(@PathVariable Long addressId);
 
+    @GetMapping(value = "/read/cpf/{patientCpf}")
+    ResponseEntity<PatientAddressDTO> readPatientByCpf(@PathVariable String patientCpf);
+
     @GetMapping(value = "/address/patient/read/{patientId}")
     ResponseEntity<PatientAddressDTO> readAddressPatient(@PathVariable Long patientId);
 

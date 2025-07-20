@@ -70,4 +70,16 @@ public class PharmacyController {
     public ResponseEntity<List<GetProductDataDTO>> getProducts(@RequestBody String productName) {
         return pharmacyService.getProducts(productName, TokenHolder.getToken());
     }
+
+    @PreAuthorize("hasRole('PHARMACY')")
+    @GetMapping("/product/getProductsByCnpj/{drugstoreCnpj}")
+    public ResponseEntity<List<GetProductDataDTO>> getProductsByCnpj(@PathVariable String drugstoreCnpj) {
+        return pharmacyService.getProductsByCnpj(drugstoreCnpj, TokenHolder.getToken());
+    }
+
+    @PreAuthorize("hasRole('PHARMACY')")
+    @GetMapping("/drugstore/{drugstoreCnpj}")
+    public ResponseEntity<List<GetProductDataDTO>> getDrugstore(@PathVariable String drugstoreCnpj) {
+        return pharmacyService.getDrugstore(drugstoreCnpj, TokenHolder.getToken());
+    }
 }

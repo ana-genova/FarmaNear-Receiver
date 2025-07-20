@@ -22,28 +22,28 @@ public class PatientController implements PatientService {
 
     @Override
     @PreAuthorize("hasRole('PATIENT')")
-    @PostMapping(value="/patient/create")
+    @PostMapping(value = "/patient/create")
     public ResponseEntity<PatientDTO> createPatient(@RequestBody PatientDTO patientDto) {
         return patientService.createPatient(patientDto);
     }
 
     @Override
     @PreAuthorize("hasRole('PATIENT')")
-    @GetMapping(value="/patient/read/{patientId}")
+    @GetMapping(value = "/patient/read/{patientId}")
     public ResponseEntity<PatientDTO> readPatient(@PathVariable Long patientId) {
         return patientService.readPatient(patientId);
     }
 
     @Override
     @PreAuthorize("hasRole('PATIENT')")
-    @PutMapping(value="/patient/update")
+    @PutMapping(value = "/patient/update")
     public ResponseEntity<PatientDTO> updatePatient(@RequestBody PatientDTO patientDto) {
         return patientService.updatePatient(patientDto);
     }
 
     @Override
     @PreAuthorize("hasRole('PATIENT')")
-    @DeleteMapping(value="/patient/delete/{patientId}")
+    @DeleteMapping(value = "/patient/delete/{patientId}")
     public ResponseEntity<String> deletePatient(@PathVariable Long patientId) {
         return patientService.deletePatient(patientId);
     }
@@ -51,7 +51,7 @@ public class PatientController implements PatientService {
 
     @Override
     @PreAuthorize("hasRole('PATIENT')")
-    @PostMapping(value="/medication/create")
+    @PostMapping(value = "/medication/create")
     public ResponseEntity<MedicationDTO> createMedication(@RequestBody MedicationDTO medicationDto) {
         return patientService.createMedication(medicationDto);
     }
@@ -120,4 +120,10 @@ public class PatientController implements PatientService {
         return patientService.deleteAddress(addressId);
     }
 
+    @Override
+    @PreAuthorize("hasRole('PATIENT')")
+    @GetMapping(value = "/read/cpf/{patientCpf}")
+    public ResponseEntity<PatientAddressDTO> readPatientByCpf(@PathVariable String patientCpf) {
+        return patientService.readPatientByCpf(patientCpf);
+    }
 }
